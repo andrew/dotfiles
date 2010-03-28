@@ -1,0 +1,11 @@
+# requires the following gems:
+#   autotest-fsevent (0.1.1)
+#   autotest-growl (0.1.6)
+
+require 'autotest/growl'
+require 'autotest/fsevent'
+
+Autotest.add_hook :initialize do |autotest|
+  %w{.git .svn .hg .DS_Store ._* vendor}.each {|exception| autotest.add_exception(exception) }
+  false
+end

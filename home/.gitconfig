@@ -1,0 +1,26 @@
+[user]
+  name = Andrew Nesbitt
+  email = andrewnez@gmail.com
+[github]
+  user = andrew
+  token = *secret*
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+[alias]
+  st = status
+  ci = commit
+  co = checkout
+  br = branch
+[merge]
+  tool = opendiff
+  summary = true
+[core]
+  excludesfile = ~/.gitignore
+  editor = mate -w
+[apply]
+  whitespace = nowarn
+[format]
+  pretty = %C(yellow)%h%Creset %s
