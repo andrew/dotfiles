@@ -1,31 +1,12 @@
+puts 'loading ~/.irbrc'
 require 'pp'
 require 'rubygems'
 
 require 'irb/completion'
+require 'irb/ext/save-history'
 
-begin
-  require 'sketches'
-  Sketches.config :editor => 'mate'
-rescue LoadError
-  'please run: `sudo gem install sketches`'
-end
-
-begin
-  require 'wirble'
-  Wirble.init(:history_size => 10000)
-  Wirble.colorize
-
-
-rescue LoadError
-  puts "please run: `sudo gem install wirble`"
-end
-
-begin
-  require 'hirb'
-  Hirb.enable
-rescue LoadError
-  puts "please run: `sudo gem install hirb`"
-end
+IRB.conf[:SAVE_HISTORY] = 1000
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
 
 class Object
   # Return a list of methods defined locally for a particular object.  Useful
@@ -37,7 +18,7 @@ class Object
 end
 
 # Log to STDOUT if in Rails
-if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
-  require 'logger'
-  RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
+if Object.const_defined?('ActiveRecord')
+  puts "Loading Rails SQL logger"
+  ActiveRecord::Base.connection.instance_variable_set :@logger, Logger.new(STDOUT)
 end
